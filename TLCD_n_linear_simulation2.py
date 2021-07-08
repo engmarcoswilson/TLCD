@@ -19,7 +19,7 @@ t = np.linspace(0, 400, n)
 winit = (0, 0)
 
 #Excitação
-Omg_exc = np.logspace(-1, 1, 500)
+Omg_exc = np.linspace(0, 2.5, 500)
 u0 = 1
 
 #Dados do TLCD
@@ -42,3 +42,4 @@ w = csv.writer(f)
 for i in range(0, 500):
   w0[i] = tlcd_n_linear(tlcd_estrutura, winit, t, e_L, wa, alfa, u0, Omg_exc[i])
   w.writerow([Omg_exc[i], w0[i]])
+print('finalizado')
