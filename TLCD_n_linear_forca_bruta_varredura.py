@@ -20,7 +20,6 @@ winit = (0, 0)
 
 #Excitação
 Omg_exc = np.logspace(-1, 1, 500)
-u0 = 1
 
 #Dados do TLCD
 u0 =1
