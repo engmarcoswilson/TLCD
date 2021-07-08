@@ -19,7 +19,7 @@ t = np.linspace(0, 400, n)
 winit = (0, 0)
 
 #Excitação
-Omg_exc = np.linspace(0, 2.5, 500)
+Omg_exc = np.logspace(0, 2.5, 500)
 u0 = 1
 
 #Dados do TLCD
@@ -44,7 +44,7 @@ for i in range(0, 500):
   w.writerow([Omg_exc[i], w0[i]])
 
  
-plt.figure(figsize=(10,8))
+plt.figure(figsize=(12,8))
 plt.plot(Omg_exc, abs(w0), "r--",label='u - numérico')
 plt.xscale("log")
 plt.yscale("log")
@@ -55,4 +55,5 @@ plt.xlabel("$\Omega_{exc} [Hz]$")
 plt.ylabel('u')
 plt.legend(loc='best', fontsize=10)
 plt.grid()
+plt.savefig('TLCD_freq_x_w0', format='png')
 plt.show()
