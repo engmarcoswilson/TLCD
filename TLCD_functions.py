@@ -7,7 +7,6 @@ TLCD Funções
 import math
 import numpy as np
 from scipy.integrate import odeint
-from matplotlib import pyplot as plt
 
 
 def tlcd_estrutura(w, t, e_L, wa, alfa, u0, Omg_exc):
