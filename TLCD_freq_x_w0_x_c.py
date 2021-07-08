@@ -19,26 +19,28 @@ w0 = dados[:,1]
 
 #Dados do TLCD
 u0 =1
-e_L=0
+rho = 10000 #N/m³
+e_L=0.001
 b = 2
 H = 1
 L = 2*H+b
 alfa = b/L
 g = 9.81
 wa = np.sqrt((2*g/L))
+A = 0.1
 
 #tempo
 n = 500
 t = np.linspace(0, 400, n)
 winit = (0, 0)
 
-def c_TLCD(B, L, u0, Omg_exc_rad, t, w0):
-  c = ((B/L)*(u0*Omg_exc_rad*np.cos(Omg_exc_rad*t))+w0*Omg_exc_rad*np.cos(Omg_exc_rad*t))/(-w0*np.sin(Omg_exc_rad*t))
+def c_TLCD(rho, A, B, L, u0, Omg_exc_rad, t, w0):
+  c = (rho*A*L)*(((B/L)*(-u0*Omg_exc_rad*np.cos(Omg_exc_rad*t))-w0*Omg_exc_rad*np.cos(Omg_exc_rad*t)+(g/L)*w0*np.cos(Omg_exc_rad*t))/(w0*np.sin(Omg_exc_rad*t)))
   return c
 
 Omg_exc_rad = Omg_exc*2*np.pi
 c = np.zeros(len(t))
-c = c_TLCD(b, L, u0, Omg_exc_rad[100], t, w0[100])
+c = c_TLCD(rho, A, b, L, u0, Omg_exc_rad[200], t, w0[200])
 print(c)
 
 plt.figure(figsize=(12,8))
