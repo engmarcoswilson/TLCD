@@ -19,12 +19,12 @@ t = np.linspace(0, 400, n)
 winit = (0, 0)
 
 #Excitação
-Omg_exc = np.linspace(0, 2.5, 500)
+Omg_exc = np.linspace(0, 3, 500)
 u0 = 1
 
 #Dados do TLCD
 u0 =1
-e_L=0
+e_L=0.001
 b = 2
 H = 1
 L = 2*H+b
