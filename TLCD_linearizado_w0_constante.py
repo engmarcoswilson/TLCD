@@ -72,7 +72,7 @@ w0_linearizado = np.zeros(len(Omg_exc))
 #Simulação
 for i in range(0, len(Omg_exc)):
   w0_linearizado[i] = tlcd_linearizado(tlcd_linearizado_estrutura, winit, t, alfa, u0, Omg_exc[i], ceq_gao[i], rho, A, L, wa)
-  w.writerow([Omg_exc[i], ceq_gao[i], w0_linearizado[i]])
+  w.writerow([Omg_exc[i], w0[i], ceq_gao[i], w0_linearizado[i]])
 print('finalizado')
 
 
