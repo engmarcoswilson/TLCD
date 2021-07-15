@@ -40,7 +40,7 @@ c=np.zeros((len(Omg_exc), len(t)))
 
 for i in range(0, len(Omg_exc)):
     c[i, :] = amortecimento(rho, A, e_L, L, w0[i], Omg_exc[i], t)
-print(c)
+print(max(c))
 
 # Importando as bibliotecas necessárias
 from mpl_toolkits.mplot3d import axes3d

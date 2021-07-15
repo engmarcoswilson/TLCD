@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Simulação TLCD linearizado
-Leitura arquivos csv (Omg_exc x w0_linearizado)
-Plotagem Omg_exc x w0_linearizado
-Marcos Wilson
+Created on Thu Jul 15 15:10:17 2021
+
+@author: User
 """
 import csv
 import numpy as np
@@ -21,26 +20,27 @@ ceq_gao = dados[:,3]
 w0_linearizado = dados[:,4]
 w0_linearizado_gao = dados[:,5]
 
-print(len(Omg_exc))
+dados2 = pd.read_csv('TLCD_freq_x_ceq_w0_constante_x_w0_linearizado.csv')
+dados2 = dados2.dropna()
+dados2 = dados2.to_numpy()
+w0_linearizado_const = dados2[:,4]
+w0_linearizado_gao_const = dados2[:,5]
+Omg_exc2 = dados2[:,0]
 
 plt.figure(figsize=(12,8))
 plt.plot(Omg_exc, abs(w0),label='w0')
 plt.plot(Omg_exc, abs(w0_linearizado),label='w0_linearizado')
 plt.plot(Omg_exc, abs(w0_linearizado_gao),label='w0_linearizado - gao')
-#plt.xscale("log")
+plt.plot(Omg_exc2, abs(w0_linearizado_const),label='w0_linearizado - w0 constante')
+plt.plot(Omg_exc2, abs(w0_linearizado_gao_const),label='w0_linearizado - w0 constante - gao')
 plt.yscale("log")
 plt.rc('axes', titlesize=16)     # fontsize of the axes title
 plt.rc('axes', labelsize=16)    # fontsize of the x and y labels
 plt.rcParams.update({'font.size': 16})
 plt.xlabel("$\Omega_{exc} [Hz]$")
 plt.ylabel('w')
+plt.xlim(2, 2.5)
+plt.ylim(1, max(w0_linearizado)+10)
 plt.legend(loc='best', fontsize=10)
 plt.grid()
-plt.savefig('TLCD_freq_x_w0', format='png')
 plt.show()
-
-
-
-print(max(w0))
-print(max(w0_linearizado))
-print(max(w0_linearizado_gao))
