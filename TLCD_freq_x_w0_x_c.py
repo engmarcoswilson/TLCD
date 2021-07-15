@@ -38,14 +38,21 @@ def c_TLCD(rho, A, B, L, e_L, Omg_exc, t, w0):
   c = (Omg_exc*w0*rho*A*(e_L*L))/np.pi
   return c
 
+def c_gao_TLCD(rho, A, B, L, e_L, Omg_exc, t, w0):
+  c = (4/3)*(Omg_exc*w0*rho*A*(e_L*L))/np.pi
+  return c
+
 Omg_exc_rad = Omg_exc*2*np.pi
 ceq = np.zeros(len(Omg_exc))
+ceq_gao = np.zeros(len(Omg_exc))
 
 for i in range(0, len(Omg_exc)):
     ceq[i] = c_TLCD(rho, A, b, L, e_L, Omg_exc[i], t, w0[i])
+    ceq_gao[i] = c_gao_TLCD(rho, A, b, L, e_L, Omg_exc[i], t, w0[i])
 
 plt.figure(figsize=(12,8))
 plt.plot(Omg_exc, ceq, label='ceq')
+plt.plot(Omg_exc, ceq_gao, label='ceq_gao')
 plt.rc('axes', titlesize=16)     # fontsize of the axes title
 plt.rc('axes', labelsize=16)    # fontsize of the x and y labels
 plt.rcParams.update({'font.size': 16})
@@ -58,9 +65,8 @@ plt.show()
 f = open('TLCD_freq_x_w0_x_ceq.csv', 'w', newline='', encoding = 'utf-8')
 w = csv.writer(f)
 
-print(Omg_exc)
 
 #Simulação
 for i in range(0, len(Omg_exc)):
-  w.writerow([Omg_exc[i], w0[i], ceq[i]])
+  w.writerow([Omg_exc[i], w0[i], ceq[i], ceq_gao[i]])
 print('finalizado')
