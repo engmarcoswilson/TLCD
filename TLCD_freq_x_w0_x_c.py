@@ -19,7 +19,7 @@ w0 = dados[:,1]
 
 #Dados do TLCD
 u0 =1
-rho = 10000 #N/m³
+rho = 1000 #Kg/m³
 e_L=0.001
 b = 2
 H = 1
@@ -34,17 +34,18 @@ n = 500
 t = np.linspace(0, 400, n)
 winit = (0, 0)
 
-def c_TLCD(rho, A, B, L, u0, Omg_exc_rad, t, w0):
-  c = (rho*A*L)*(((B/L)*(-u0*Omg_exc_rad*np.cos(Omg_exc_rad*t))-w0*Omg_exc_rad*np.cos(Omg_exc_rad*t)+(g/L)*w0*np.cos(Omg_exc_rad*t))/(w0*np.sin(Omg_exc_rad*t)))
+def c_TLCD(rho, A, B, L, e_L, Omg_exc, t, w0):
+  c = (Omg_exc*w0*rho*A*(e_L*L))/np.pi
   return c
 
 Omg_exc_rad = Omg_exc*2*np.pi
-c = np.zeros(len(t))
-c = c_TLCD(rho, A, b, L, u0, Omg_exc_rad[200], t, w0[200])
-print(c)
+ceq = np.zeros(len(Omg_exc))
+
+for i in range(0, len(Omg_exc)):
+    ceq[i] = c_TLCD(rho, A, b, L, e_L, Omg_exc[i], t, w0[i])
 
 plt.figure(figsize=(12,8))
-plt.plot(t, c,label='w0')
+plt.plot(Omg_exc, ceq, label='ceq')
 plt.rc('axes', titlesize=16)     # fontsize of the axes title
 plt.rc('axes', labelsize=16)    # fontsize of the x and y labels
 plt.rcParams.update({'font.size': 16})
@@ -53,3 +54,13 @@ plt.ylabel('c')
 plt.legend(loc='best', fontsize=10)
 plt.grid()
 plt.show()
+
+f = open('TLCD_freq_x_w0_x_ceq.csv', 'w', newline='', encoding = 'utf-8')
+w = csv.writer(f)
+
+print(Omg_exc)
+
+#Simulação
+for i in range(0, len(Omg_exc)):
+  w.writerow([Omg_exc[i], w0[i], ceq[i]])
+print('finalizado')
