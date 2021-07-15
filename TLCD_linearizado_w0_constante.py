@@ -9,6 +9,8 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from TLCD_functions import tlcd_linearizado_estrutura
+from TLCD_functions import tlcd_linearizado
 
     
 dados = pd.read_csv('TLCD_freq_x_w0.csv')
@@ -16,6 +18,7 @@ dados = dados.dropna()
 dados = dados.to_numpy()
 Omg_exc = dados[:,0]
 w0 = dados[:,1]
+w0_max = max(w0)
 
 #Dados do TLCD
 u0 =1
@@ -47,8 +50,8 @@ ceq = np.zeros(len(Omg_exc))
 ceq_gao = np.zeros(len(Omg_exc))
 
 for i in range(0, len(Omg_exc)):
-    ceq[i] = c_TLCD(rho, A, b, L, e_L, Omg_exc[i], t, w0[i])
-    ceq_gao[i] = c_gao_TLCD(rho, A, b, L, e_L, Omg_exc[i], t, w0[i])
+    ceq[i] = c_TLCD(rho, A, b, L, e_L, Omg_exc[i], t, w0_max)
+    ceq_gao[i] = c_gao_TLCD(rho, A, b, L, e_L, Omg_exc[i], t, w0_max)
 
 plt.figure(figsize=(12,8))
 plt.plot(Omg_exc, ceq, label='ceq')
@@ -62,11 +65,15 @@ plt.legend(loc='best', fontsize=10)
 plt.grid()
 plt.show()
 
-f = open('TLCD_freq_x_w0_x_ceq.csv', 'w', newline='', encoding = 'utf-8')
+f = open('TLCD_freq_x_ceq_w0_constante_x_w0_linearizado.csv', 'w', newline='', encoding = 'utf-8')
 w = csv.writer(f)
 
-
+w0_linearizado = np.zeros(len(Omg_exc))
 #Simulação
 for i in range(0, len(Omg_exc)):
-  w.writerow([Omg_exc[i], w0[i], ceq[i], ceq_gao[i]])
+  w0_linearizado[i] = tlcd_linearizado(tlcd_linearizado_estrutura, winit, t, alfa, u0, Omg_exc[i], ceq_gao[i], rho, A, L, wa)
+  w.writerow([Omg_exc[i], ceq_gao[i], w0_linearizado[i]])
 print('finalizado')
+
+
+
