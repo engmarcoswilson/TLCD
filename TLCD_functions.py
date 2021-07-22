@@ -75,7 +75,7 @@ def twoGdl_experimental(z0, t, M, K, C, f0, Omg_exc):
   x1 = np.zeros((int(len(z0)/2),1))
   y1 = np.zeros((int(len(z0)/2),1))
   P = np.zeros((int(len(z0)/2),1))
-  P[0, 0] = f0*np.cos(Omg_exc*2*np.pi*t)
+  P[0, 0] = (f0*np.cos(Omg_exc*2*np.pi*t))
   P[1, 0] = 0
   for i in range (0, int(len(z0)/2)):
     x1[i,0] = x[i]

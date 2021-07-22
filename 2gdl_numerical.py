@@ -76,10 +76,10 @@ K = [[(ws**2), 0],
 
 for i in range(0, len(Omg_exc)):
     C = [[2*ws*es, 0], 
-     [0, ceq[i]]]
+         [0, ceq[i]]]
 
     C_gao = [[2*ws*es, 0], 
-         [0, ceq_gao[i]]]
+             [0, ceq_gao[i]]]
 
     H2_u_forca_bruta[i], H2_w_forca_bruta[i] = forca_bruta_twoGdl(z0_2, t, M, K, C, f0, Omg_exc[i])
     H2_u_forca_bruta_gao[i], H2_w_forca_bruta_gao[i] = forca_bruta_twoGdl(z0_2, t, M, K, C_gao, f0, Omg_exc[i])

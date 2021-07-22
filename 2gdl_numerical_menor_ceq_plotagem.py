@@ -22,9 +22,11 @@ H2_w_forca_bruta = dados[:,2]
 H2_u_forca_bruta_gao = dados[:,3]
 H2_w_forca_bruta_gao = dados[:,4]
 
+
 dados2 = pd.read_csv('2gdl_analytical.csv')
-dados2 = dados2.dropna()
 dados2 = dados2.to_numpy()
+
+Omg_exc2 = dados2[:,0]
 
 H2_u_analitico = dados2[:,1]
 H2_w_analitico = dados2[:,2]
@@ -74,8 +76,8 @@ print("\nNatural Frequencies, Hz - Estrutura principal: ", ws/(2*np.pi),
 plt.figure(figsize=(16,8))
 plt.plot(Omg_exc, H2_u_forca_bruta, color = 'blue', label='u_{0} - numerical')
 plt.plot(Omg_exc, H2_w_forca_bruta,color = 'red',label='w_{0} - numerical')
-plt.plot(Omg_exc, H2_u_analitico, color = 'green', label='u_{0} - anlytical')
-plt.plot(Omg_exc, H2_w_analitico,color = 'orange',label='w_{0} - analytical')
+plt.plot(Omg_exc2, H2_u_analitico, color = 'green', label='u_{0} - anlytical')
+plt.plot(Omg_exc2, H2_w_analitico,color = 'orange',label='w_{0} - analytical')
 plt.yscale("log")
 plt.rc('axes', titlesize=16)     # fontsize of the axes title
 plt.rc('axes', labelsize=16)    # fontsize of the x and y labels
@@ -85,3 +87,6 @@ plt.ylabel('H(i$\Omega$)')
 plt.legend(loc='best', fontsize=10)
 plt.grid()
 plt.show()
+
+print(max(H2_u_analitico))
+print(max(H2_u_forca_bruta))

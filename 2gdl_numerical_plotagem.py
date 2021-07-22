@@ -86,3 +86,6 @@ plt.ylabel('H(i$\Omega$)')
 plt.legend(loc='best', fontsize=10)
 plt.grid()
 plt.show()
+
+print(max(H2_u_analitico))
+print(max(H2_u_forca_bruta))
