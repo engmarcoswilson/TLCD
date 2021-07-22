@@ -12,12 +12,14 @@ Omg_exc = dados[:,0]
 w0 = dados[:,1]
 ceq = dados[:,2]
 ceq_gao = dados[:,3]
+w0_linearizado = dados[:,4]
 w0_linearizado_gao = dados[:,5]
 
 print(len(Omg_exc))
 
 plt.figure(figsize=(12,8))
 plt.plot(Omg_exc, abs(w0),label='w0')
+plt.plot(Omg_exc, abs(w0_linearizado),label='w0_linearizado')
 plt.plot(Omg_exc, abs(w0_linearizado_gao),label='w0_linearizado - gao')
 #plt.xscale("log")
 plt.yscale("log")

@@ -29,3 +29,19 @@ def tlcd_linearizado(tlcd_linearizado_estrutura, winit, t, alfa, u0, Omg_exc, ce
     warr = odeint(tlcd_linearizado_estrutura, winit, t, args=(alfa, u0, Omg_exc, ceq, rho, A, L, wa))
     w0 = np.sqrt(np.mean(np.square(warr[int(0.6*len(warr)):int(len(warr)),0])))*np.sqrt(2)
     return w0
+
+def twoGdl_analitico(mi, ea, wa, alfa, ws, es, Omg_exc):
+  Omg_exc= Omg_exc*2*np.pi
+  A1 = complex(-mi,0)
+  A2 = complex(0, 2*mi*ea*wa)
+  A3 = complex(mi*(wa**2),0)
+  A4 = complex(-alfa*mi,0)
+  B0 = complex((ws**2)*mi*(wa**2),0)
+  B1 = complex(0, 2*mi*es*(wa**2)*ws+2*mi*ea*wa*(ws**2))
+  B2 = complex((ws**2)*mi+(1+mi)*mi*(wa**2)+4*es*ws*mi*ea*wa,0)
+  B3 = complex(0, (1+mi)*2*mi*ea*wa+2*es*ws*mi)
+  B4 = complex((1+mi)*mi-(alfa**2)*(mi**2),0)
+
+  Hu = ((-A1*complex((Omg_exc**2),0)+A2*complex(Omg_exc,0)+A3)/(B4*complex((Omg_exc**4),0)-B3*complex((Omg_exc**3),0)-B2*complex((Omg_exc**2),0)+B1*complex(Omg_exc,0)+B0))
+  Hw = (-A4*complex((Omg_exc**2),0)/(B4*complex((Omg_exc**4),0)-B3*complex((Omg_exc**3),0)-B2*complex((Omg_exc**2),0)+B1*complex(Omg_exc,0)+B0))
+  return Hu, Hw
