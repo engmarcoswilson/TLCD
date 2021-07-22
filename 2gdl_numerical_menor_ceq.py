@@ -58,7 +58,7 @@ f0 = 1
 F = f0 * ks   #Amplitude da força
 
 #Simulação
-f = open('2gdl_numerical.csv', 'w', newline='', encoding = 'utf-8')
+f = open('2gdl_numerical_ceq_minimo.csv', 'w', newline='', encoding = 'utf-8')
 w = csv.writer(f)
 
 H2_u_forca_bruta = np.zeros(n)
@@ -73,13 +73,13 @@ M = [[1+mi, alfa*mi],
 K = [[(ws**2), 0],
      [0, (wa**2)*mi]]
 
+C = [[2*ws*es, 0], 
+     [0, ceq_min]]
+
+C_gao = [[2*ws*es, 0], 
+         [0, ceq_min_gao]]
 
 for i in range(0, len(Omg_exc)):
-    C = [[2*ws*es, 0], 
-     [0, ceq[i]]]
-
-    C_gao = [[2*ws*es, 0], 
-         [0, ceq_gao[i]]]
 
     H2_u_forca_bruta[i], H2_w_forca_bruta[i] = forca_bruta_twoGdl(z0_2, t, M, K, C, f0, Omg_exc[i])
     H2_u_forca_bruta_gao[i], H2_w_forca_bruta_gao[i] = forca_bruta_twoGdl(z0_2, t, M, K, C_gao, f0, Omg_exc[i])
