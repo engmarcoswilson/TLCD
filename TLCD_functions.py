@@ -9,6 +9,7 @@ import numpy as np
 from scipy.integrate import odeint
 
 
+#TLCD isolado
 def tlcd_estrutura(w, t, e_L, wa, alfa, u0, Omg_exc):
   vp = -(0.5)*(e_L)*abs(w[1])*w[1]-((2*np.pi*wa)**2)*w[0]-(alfa)*-((2*np.pi*Omg_exc)**2)*u0*np.cos(2*np.pi*Omg_exc*t)
   wp = w[1]
@@ -30,6 +31,7 @@ def tlcd_linearizado(tlcd_linearizado_estrutura, winit, t, alfa, u0, Omg_exc, ce
     w0 = np.sqrt(np.mean(np.square(warr[int(0.6*len(warr)):int(len(warr)),0])))*np.sqrt(2)
     return w0
 
+#Estrutura Principal
 def estrutura_principal_analitico(Omg_exc, wn, es):
     w = (Omg_exc*2*np.pi)/wn
     H = (1/np.sqrt(np.square((1-np.square(w)))+np.square(2*es*w)))
@@ -50,6 +52,7 @@ def forca_bruta_1gdl(z0, t, ms, ks, cs, f0, Omg_exc):
   u0 = np.sqrt(np.mean(np.square(z[int(len(t)/3):int(len(t)),0])))*np.sqrt(2)
   return u0
 
+#Estrutura 2 Graus de Liberdade (Est. Principal + TLCD)
 def twoGdl_analitico(mi, ea, wa, alfa, ws, es, Omg_exc):
   Omg_exc= Omg_exc*2*np.pi
   A1 = complex(-mi,0)
@@ -65,3 +68,33 @@ def twoGdl_analitico(mi, ea, wa, alfa, ws, es, Omg_exc):
   Hu = ((-A1*complex((Omg_exc**2),0)+A2*complex(Omg_exc,0)+A3)/(B4*complex((Omg_exc**4),0)-B3*complex((Omg_exc**3),0)-B2*complex((Omg_exc**2),0)+B1*complex(Omg_exc,0)+B0))
   Hw = (-A4*complex((Omg_exc**2),0)/(B4*complex((Omg_exc**4),0)-B3*complex((Omg_exc**3),0)-B2*complex((Omg_exc**2),0)+B1*complex(Omg_exc,0)+B0))
   return Hu, Hw
+
+def twoGdl_experimental(z0, t, M, K, C, f0, Omg_exc):
+  x = z0[0:int(len(z0)/2)]
+  y = z0[int(len(z0)/2):len(z0)]
+  x1 = np.zeros((int(len(z0)/2),1))
+  y1 = np.zeros((int(len(z0)/2),1))
+  P = np.zeros((int(len(z0)/2),1))
+  P[0, 0] = f0*np.cos(Omg_exc*2*np.pi*t)
+  P[1, 0] = 0
+  for i in range (0, int(len(z0)/2)):
+    x1[i,0] = x[i]
+    y1[i,0] = y[i]
+  Minv = np.linalg.inv(M)
+  dxdt = y1
+  dydt = Minv @ (- (C @ y1) - (K @ x1) + (P))
+  dzdt = np.vstack((dxdt, dydt))
+  dz1dt = np.zeros(len(z0))
+  for j in range(0, len(z0)):
+    dz1dt[j] = dzdt[j,0]
+  return dz1dt
+
+def forca_bruta_twoGdl(z0, t, M, K, C, f0, Omg_exc):
+  #Z - u (movimento da estrutura)
+  z = odeint(twoGdl_experimental, z0, t, args=(M, K, C, f0, Omg_exc))
+  z1 = z[:,0]
+  z2 = z[:,1]
+  #RMS
+  u0 = np.sqrt(np.mean(np.square(z1[int(len(t)/3):int(len(t))])))*np.sqrt(2)
+  w0 = np.sqrt(np.mean(np.square(z2[int(len(t)/3):int(len(t))])))*np.sqrt(2)
+  return u0, w0
