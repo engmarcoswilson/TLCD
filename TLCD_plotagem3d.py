@@ -8,12 +8,15 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from mpl_toolkits.mplot3d import axes3d
+from matplotlib import cm
 
 dados = pd.read_csv('TLCD_freq_x_w0.csv')
 dados = dados.dropna()
 dados = dados.to_numpy()
 Omg_exc = dados[:,0]
 w0 = dados[:,1]
+w0_max = max(w0)
 
 #Dados do TLCD
 u0 =1
@@ -36,31 +39,22 @@ def amortecimento(rho, A, e_L, L, w0, Omg_exc, t):
     c = 0.5*rho*A*e_L*L*abs(w0*Omg_exc*2*np.pi*np.sin(2*np.pi*Omg_exc*t))
     return c
 
-c=np.zeros((len(Omg_exc), len(t)))
+c=np.zeros((len(Omg_exc), len(t)-1))
 
 for i in range(0, len(Omg_exc)):
-    c[i, :] = amortecimento(rho, A, e_L, L, w0[i], Omg_exc[i], t)
-print(max(c))
+    for j in range(0, len(t)-1):
+        c[i, j] = amortecimento(rho, A, e_L, L, w0[i], Omg_exc[i], t[j])
 
-# Importando as bibliotecas necessárias
-from mpl_toolkits.mplot3d import axes3d
-import matplotlib.pyplot as plt
-from matplotlib import cm
- 
-# Criando a figura e projeção em 3D
+#Plotagem
 fig = plt.figure()
 ax = fig.gca(projection='3d')
- 
-# Utilizando dados de teste
-t, w0, c = axes3d.get_test_data(0.05)
-
-# Criando o gráfico com extend3d
-ax.plot_surface(w0, t, c)
-ax.set_xlabel('w0')
-ax.set_ylabel('t')
-ax.set_zlabel('c')
-ax.set_xlim(-20, 20)
-ax.set_ylim(0, 60)
-plt.yticks(np.arange(0, 60, 10))
-# Exibindo o gráfico criado
+x = Omg_exc
+y = t
+X, Y = np.meshgrid(x, y)
+Z = 0.5*rho*A*e_L*L*abs(w0_max*X*2*np.pi*np.sin(2*np.pi*X*Y))
+cset = ax.contourf(X, Y, Z) 
+plt.xlabel("$\Omega_{exc} [Hz]$")
+plt.ylabel('t(s)')
+fig.colorbar(cset, orientation='vertical',
+             label="c")
 plt.show()
