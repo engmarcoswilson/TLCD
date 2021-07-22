@@ -30,6 +30,26 @@ def tlcd_linearizado(tlcd_linearizado_estrutura, winit, t, alfa, u0, Omg_exc, ce
     w0 = np.sqrt(np.mean(np.square(warr[int(0.6*len(warr)):int(len(warr)),0])))*np.sqrt(2)
     return w0
 
+def estrutura_principal_analitico(Omg_exc, wn, es):
+    w = (Omg_exc*2*np.pi)/wn
+    H = (1/np.sqrt(np.square((1-np.square(w)))+np.square(2*es*w)))
+    return H
+
+def estrutura_principal_forca_bruta(z, t, m, k, c, f0, Omg_exc):
+  x = z[0]
+  v = z[1]
+  dxdt = v
+  dvdt = -(c/m)*v - (k/m)*x + (1/m)*(f0*k*np.cos(Omg_exc*2*np.pi*t))  #f = f0*cos(Omg_exc*t)
+  dzdt = [dxdt, dvdt]
+  return dzdt
+
+def forca_bruta_1gdl(z0, t, ms, ks, cs, f0, Omg_exc):
+  #Z - u (movimento da estrutura)
+  z = odeint(estrutura_principal_forca_bruta, z0, t, args=(ms, ks, cs, f0, Omg_exc))
+  #RMS
+  u0 = np.sqrt(np.mean(np.square(z[int(len(t)/3):int(len(t)),0])))*np.sqrt(2)
+  return u0
+
 def twoGdl_analitico(mi, ea, wa, alfa, ws, es, Omg_exc):
   Omg_exc= Omg_exc*2*np.pi
   A1 = complex(-mi,0)

@@ -49,16 +49,15 @@ ws = np.sqrt(ks/ms)  #Frequência Natural
 
 #Execução da Simulação
 #Estrutura Principal
-
+H_analitico = np.zeros(n)
 H2_u_analiticoi = np.zeros(n, dtype='complex')
 H2_w_analiticoi = np.zeros(n, dtype='complex')
 H2_u_analitico = np.zeros(n)
 H2_w_analitico = np.zeros(n)
-H2_u_forca_bruta = np.zeros(n)
-H2_w_forca_bruta = np.zeros(n)
 
-for i in range(0, n):
+
+
+for i in range(0, len(Omg_exc)):
   H2_u_analiticoi[i], H2_w_analiticoi[i] = twoGdl_analitico(mi, ea, wa, alfa, ws, es, Omg_exc[i])
   H2_u_analitico[i] = np.sqrt(H2_u_analiticoi[i]*(H2_u_analiticoi[i].conjugate()))
   H2_w_analitico[i] = np.sqrt(H2_w_analiticoi[i]*(H2_w_analiticoi[i].conjugate()))
-  H2_u_forca_bruta[i], H2_w_forca_bruta[i] = forca_bruta_twoGdl(z0, t, M, K, C, f0, Omg_exc[i])
