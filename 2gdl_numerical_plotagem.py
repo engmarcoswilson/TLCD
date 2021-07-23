@@ -44,13 +44,13 @@ ws = np.sqrt(ks/ms)  #Frequência Natural
 u0 =1
 rho = 1000 #Kg/m³
 e_L=0.001
-b = 2
-H = 1
+b = 3.856
+H = 4
 L = 2*H+b
 alfa = b/L
 g = 9.81
 wa = np.sqrt((2*g/L))
-A = 0.1
+A = 0.0000636
 ma = rho*A*L
 mi = ma/ms
 
@@ -89,3 +89,4 @@ plt.show()
 
 print(max(H2_u_analitico))
 print(max(H2_u_forca_bruta))
+print(len(H2_u_forca_bruta))
