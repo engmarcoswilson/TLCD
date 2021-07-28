@@ -21,17 +21,17 @@ w0_max = max(w0)
 #Dados do TLCD
 u0 =1
 rho = 1000 #Kg/m³
-e_L=0.001
-b = 2
-H = 1
+e_L=0.01
+b = 0.0775
+H = 0.05
 L = 2*H+b
 alfa = b/L
 g = 9.81
-wa = np.sqrt((2*g/L))
-A = 0.1
+wa = np.sqrt((2*g/L))/(2*np.pi)
+A = 0.0043875
 
 #tempo
-n = 500
+n = 5000
 t = np.linspace(0, 400, n)
 winit = (0, 0)
 
@@ -57,4 +57,14 @@ plt.xlabel("$\Omega_{exc} [Hz]$")
 plt.ylabel('t(s)')
 fig.colorbar(cset, orientation='vertical',
              label="c")
+ax.view_init(elev=5, azim=0)
+plt.show()
+
+plt.figure()
+plt.plot(t, amortecimento(rho, A, e_L, L, w0_max, 2, t))
+plt.xlim(380, 400)
+plt.show()
+
+plt.figure()
+plt.plot(Omg_exc, amortecimento(rho, A, e_L, L, w0_max, Omg_exc, 200))
 plt.show()

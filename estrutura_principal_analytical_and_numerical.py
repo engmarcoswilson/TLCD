@@ -24,12 +24,13 @@ t = np.linspace(0, 400, n)
 winit = (0, 0)
 
 #Características da Estrutura Principal
-ms = 7.5  #Kg
-ks = 490  #N/m
+ms = 176.935 #Kg
+ks = 18330  #N/m
 es = 0.01
-cc = 2*np.sqrt(ms*ks)   #Ccrítico
-cs = es*cc
-ws = np.sqrt(ks/ms)  #Frequência Natural
+#cc = 2*np.sqrt(ms*ks)   #Ccrítico
+#cs = es*cc
+cs = 36.73  #N.s/m
+ws = np.sqrt(ks/ms)/(2*np.pi)  #Frequência Natural
 
 #Condição inicial
 z0 = [0, 0]   # x=0 e v=0

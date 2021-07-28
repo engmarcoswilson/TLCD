@@ -39,8 +39,6 @@ plt.rc('axes', labelsize=16)    # fontsize of the x and y labels
 plt.rcParams.update({'font.size': 16})
 plt.xlabel("$\Omega_{exc} [Hz]$")
 plt.ylabel('w')
-plt.xlim(2, 2.5)
-plt.ylim(1, max(w0_linearizado)+10)
 plt.legend(loc='best', fontsize=10)
 plt.grid()
 plt.show()

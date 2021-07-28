@@ -16,23 +16,22 @@ import pandas as pd
 
 
 #Condição inicial
-n = 500
+n = 5000
 t = np.linspace(0, 400, n)
 winit = (0, 0)
 
 u0 = 1
 
 #Dados do TLCD
-u0 =1
 rho = 1000 #Kg/m³
-e_L=0.001
-b = 2
-H = 1
+e_L=0.01
+b = 0.0775
+H = 0.05
 L = 2*H+b
 alfa = b/L
 g = 9.81
-wa = np.sqrt((2*g/L))
-A = 0.1
+wa = np.sqrt((2*g/L))/(2*np.pi)
+A = 0.0043875
 
 dados = pd.read_csv('TLCD_freq_x_w0_x_ceq.csv')
 dados = dados.dropna()

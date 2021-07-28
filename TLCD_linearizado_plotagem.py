@@ -24,9 +24,9 @@ w0_linearizado_gao = dados[:,5]
 print(len(Omg_exc))
 
 plt.figure(figsize=(12,8))
-plt.plot(Omg_exc, abs(w0),label='w0')
-plt.plot(Omg_exc, abs(w0_linearizado),label='w0_linearizado')
-plt.plot(Omg_exc, abs(w0_linearizado_gao),label='w0_linearizado - gao')
+plt.plot(Omg_exc, abs(w0),label='w_{0}')
+plt.plot(Omg_exc, abs(w0_linearizado),label='w_{0} linearizado')
+plt.plot(Omg_exc, abs(w0_linearizado_gao),label='w_{0} linearizado - gao')
 #plt.xscale("log")
 plt.yscale("log")
 plt.rc('axes', titlesize=16)     # fontsize of the axes title

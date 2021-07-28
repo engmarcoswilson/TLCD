@@ -47,13 +47,13 @@ ws = np.sqrt(ks/ms)  #Frequência Natural
 u0 =1
 rho = 1000 #Kg/m³
 e_L=0.001
-b = 2
-H = 1
+b = 3.856
+H = 4
 L = 2*H+b
 alfa = b/L
 g = 9.81
 wa = np.sqrt((2*g/L))
-A = 0.1
+A = 0.0000636
 ma = rho*A*L
 mi = ma/ms
 
@@ -94,11 +94,11 @@ plt.plot(Omg_exc2, H2_w_forca_bruta,color = 'orange',label='$w_{0}$')
 plt.plot(wnHz[0], H2u_max1, '-o', color='green')
 plt.text(wnHz[0]-0.14, H2u_max1 +1.5, (wnHz[0],H2u_max1),fontsize=14, color='green')
 plt.plot(wnHz[1], H2u_max2, '-o', color='green')
-plt.text(wnHz[1]-0.14, H2u_max2 - 0.2, (wnHz[1],H2u_max2),fontsize=14, color='green')
+plt.text(wnHz[1]-0.14, H2u_max2 + 0.2, (wnHz[1],H2u_max2),fontsize=14, color='green')
 plt.plot(wnHz[0], H2w_max1, '-o', color = 'orange')
 plt.text(wnHz[0]-0.14, H2w_max1 +0.1, (wnHz[0],H2w_max1),fontsize=14, color = 'orange')
 plt.plot(wnHz[1], H2w_max2, '-o', color = 'orange')
-plt.text(wnHz[1]-0.14, H2w_max2 +0.14, (wnHz[1],H2w_max2),fontsize=14, color = 'orange')
+plt.text(wnHz[1]-0.14, H2w_max2 +0.1, (wnHz[1],H2w_max2),fontsize=14, color = 'orange')
 plt.yscale("log")
 plt.rc('axes', titlesize=16)     # fontsize of the axes title
 plt.rc('axes', labelsize=16)    # fontsize of the x and y labels

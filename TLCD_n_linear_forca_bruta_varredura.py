@@ -14,22 +14,22 @@ from TLCD_functions import tlcd_estrutura
 from TLCD_functions import tlcd_n_linear
 
 #Condição inicial
-n = 500
-t = np.linspace(0, 400, n)
+n = 5000
+t = np.linspace(0, 1000, n)
 winit = (0, 0)
 
 #Excitação
 Omg_exc = np.linspace(0, 3, 500)
+u0 =1
 
 #Dados do TLCD
-u0 =1
-e_L=0
-b = 2
-H = 1
+e_L=0.01
+b = 0.0775
+H = 0.05
 L = 2*H+b
 alfa = b/L
 g = 9.81
-wa = np.sqrt((2*g/L))
+wa = np.sqrt((2*g/L))/(2*np.pi)
 
 #Varredura: Força Bruta
 F_exc = np.array([])
@@ -52,6 +52,8 @@ for i in range(0, len(F_exc)):
   plt.legend(loc='upper right', prop={'size':16})
   plt.xlabel("t (s)")
   plt.ylabel('Amplitude')
+  plt.xlim(900, 1000)
   plt.legend(loc='best')
+  plt.title('%.3f Hz'%F_exc[i])
   plt.savefig('varredura_forca_bruta%.3f.png'%F_exc[i], format='png')
   plt.show()

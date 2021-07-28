@@ -20,17 +20,17 @@ w0 = dados[:,1]
 #Dados do TLCD
 u0 =1
 rho = 1000 #Kg/m³
-e_L=0.001
-b = 2
-H = 1
+e_L=0.01
+b = 0.0775
+H = 0.05
 L = 2*H+b
 alfa = b/L
 g = 9.81
-wa = np.sqrt((2*g/L))
-A = 0.1
+wa = np.sqrt((2*g/L))/(2*np.pi)
+A = 0.0043875
 
 #tempo
-n = 500
+n = 5000
 t = np.linspace(0, 400, n)
 winit = (0, 0)
 
@@ -54,13 +54,11 @@ for i in range(0, len(Omg_exc)):
 plt.figure(figsize=(12,8))
 plt.plot(Omg_exc, ceq, label='ceq')
 plt.plot(Omg_exc, ceq_gao, label='ceq_gao')
-plt.plot(Omg_exc, ceq_const, label='ceq_gao')
 plt.rc('axes', titlesize=16)     # fontsize of the axes title
 plt.rc('axes', labelsize=16)    # fontsize of the x and y labels
 plt.rcParams.update({'font.size': 16})
 plt.xlabel("$\Omega_{exc} [Hz]$")
 plt.ylabel('c')
-plt.xlim(2, 2.5)
 plt.legend(loc='best', fontsize=10)
 plt.grid()
 plt.show()

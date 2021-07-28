@@ -33,7 +33,7 @@ def tlcd_linearizado(tlcd_linearizado_estrutura, winit, t, alfa, u0, Omg_exc, ce
 
 #Estrutura Principal
 def estrutura_principal_analitico(Omg_exc, wn, es):
-    w = (Omg_exc*2*np.pi)/wn
+    w = (Omg_exc)/wn
     H = (1/np.sqrt(np.square((1-np.square(w)))+np.square(2*es*w)))
     return H
 

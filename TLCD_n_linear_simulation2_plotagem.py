@@ -18,10 +18,15 @@ dados = dados.to_numpy()
 Omg_exc = dados[:,0]
 w0 = dados[:,1]
 
-print(w0)
+w0_max = np.amax(w0)
+ind_max = np.argmax(w0)
+w0_max = float("{:.3f}".format(w0_max))
+Omg_exc[ind_max] = float("{:.3f}".format(Omg_exc[ind_max]))
 
 plt.figure(figsize=(12,8))
-plt.plot(Omg_exc, abs(w0),label='w0')
+plt.plot(Omg_exc, abs(w0),label='w_{0}')
+plt.plot(Omg_exc[ind_max], w0_max,'-o', color='blue')
+plt.text(Omg_exc[ind_max]-0.24, w0_max +3, (Omg_exc[ind_max],w0_max),fontsize=14, color='blue')
 #plt.xscale("log")
 plt.yscale("log")
 plt.rc('axes', titlesize=16)     # fontsize of the axes title
@@ -33,3 +38,5 @@ plt.legend(loc='best', fontsize=10)
 plt.grid()
 plt.savefig('TLCD_freq_x_w0', format='png')
 plt.show()
+
+print(max(w0))
