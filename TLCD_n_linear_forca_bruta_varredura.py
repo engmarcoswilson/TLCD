@@ -46,13 +46,13 @@ for i in range(0, len(F_exc)):
   w = w0_n[i]*np.cos(F_exc[i]*2*np.pi*t)
   
   plt.figure(figsize=(16, 10))
-  plt.plot(t, warr[:, 0], label='w(t)')
-  plt.plot(t[int(len(t)/2):int(len(t))], w[int(len(t)/2):int(len(t))], label='w(t)')
+  plt.plot(t, warr[:, 0], label='w(t) - numerical')
+  plt.plot(t[int(len(t)/2):int(len(t))], w[int(len(t)/2):int(len(t))], label='w(t) - RMS')
   plt.rcParams['legend.fontsize'] = 12
   plt.legend(loc='upper right', prop={'size':16})
   plt.xlabel("t (s)")
-  plt.ylabel('Amplitude')
-  plt.xlim(900, 1000)
+  plt.ylabel('w(t)')
+  plt.xlim(900, 940)
   plt.legend(loc='best')
   plt.title('%.3f Hz'%F_exc[i])
   plt.savefig('varredura_forca_bruta%.3f.png'%F_exc[i], format='png')

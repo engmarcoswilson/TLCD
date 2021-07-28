@@ -23,7 +23,7 @@ ind_max = np.argmax(H_analitico)
 plt.figure(figsize=(12,8))
 plt.plot(Omg_exc, H_analitico,label='H - analytical')
 plt.plot(Omg_exc, H_forca_bruta, 'k--', color='red', label='H - numerical')
-plt.plot(Omg_exc[ind_max], H_max, '-o')
+plt.plot(Omg_exc[ind_max], H_max, '-o', color = 'blue')
 plt.text(Omg_exc[ind_max]-0.68, H_max +4, (Omg_exc[ind_max],H_max),fontsize=14)
 plt.yscale("log")
 plt.rc('axes', titlesize=16)     # fontsize of the axes title

@@ -55,16 +55,22 @@ Z = 0.5*rho*A*e_L*L*abs(w0_max*X*2*np.pi*np.sin(2*np.pi*X*Y))
 cset = ax.contourf(X, Y, Z) 
 plt.xlabel("$\Omega_{exc} [Hz]$")
 plt.ylabel('t(s)')
-fig.colorbar(cset, orientation='vertical',
-             label="c")
-ax.view_init(elev=5, azim=0)
+fig.colorbar(cset, orientation='vertical', label="$c_{eq}$")
+#ax.view_init(elev=10, azim=135)
 plt.show()
 
+#Plot t x ceq
 plt.figure()
 plt.plot(t, amortecimento(rho, A, e_L, L, w0_max, 2, t))
+plt.xlabel("$c_{eq}$")
+plt.ylabel('t(s)')
 plt.xlim(380, 400)
 plt.show()
 
+#Plot Omg_exc x ceq
 plt.figure()
 plt.plot(Omg_exc, amortecimento(rho, A, e_L, L, w0_max, Omg_exc, 200))
+plt.xlabel("$c_{eq}$")
+plt.ylabel('$\Omega_{exc} [Hz]$')
+plt.xlim(2, 3)
 plt.show()
