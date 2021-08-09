@@ -34,24 +34,25 @@ H2_u_analitico_gao = dados2[:,3]
 H2_w_analitico_gao = dados2[:,4]
 
 #Características da Estrutura Principal
-ms = 7.5  #Kg
-ks = 490  #N/m
+ms = 176.935 #Kg
+ks = 18330  #N/m
 es = 0.01
-cc = 2*np.sqrt(ms*ks)   #Ccrítico
-cs = es*cc
-ws = np.sqrt(ks/ms)  #Frequência Natural
+#cc = 2*np.sqrt(ms*ks)   #Ccrítico
+#cs = es*cc
+cs = 36.73  #N.s/m
+ws = np.sqrt(ks/ms) #Frequência Natural
 
 #Dados do TLCD
 u0 =1
 rho = 1000 #Kg/m³
-e_L=0.001
-b = 2
-H = 1
+e_L=0.01
+b = 0.0775
+H = 0.05
 L = 2*H+b
 alfa = b/L
 g = 9.81
 wa = np.sqrt((2*g/L))
-A = 0.1
+A = 0.0043875
 ma = rho*A*L
 mi = ma/ms
 
@@ -74,8 +75,8 @@ print("\nNatural Frequencies, Hz - Estrutura principal: ", ws/(2*np.pi),
       "\n                          Estrutura acoplada:  ", wnHz)
 
 plt.figure(figsize=(16,8))
-plt.plot(Omg_exc, H2_u_forca_bruta, color = 'blue', label='u_{0} - numerical')
-plt.plot(Omg_exc, H2_w_forca_bruta,color = 'red',label='w_{0} - numerical')
+plt.plot(Omg_exc, H2_u_forca_bruta_gao, color = 'blue', label='u_{0} - numerical')
+plt.plot(Omg_exc, H2_w_forca_bruta_gao,color = 'red',label='w_{0} - numerical')
 plt.plot(Omg_exc2, H2_u_analitico, color = 'green', label='u_{0} - anlytical')
 plt.plot(Omg_exc2, H2_w_analitico,color = 'orange',label='w_{0} - analytical')
 plt.yscale("log")
@@ -89,4 +90,4 @@ plt.grid()
 plt.show()
 
 print(max(H2_u_analitico))
-print(max(H2_u_forca_bruta))
+print(max(H2_u_forca_bruta_gao))

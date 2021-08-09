@@ -27,8 +27,8 @@ dados2 = dados2.dropna()
 dados2 = dados2.to_numpy()
 
 Omg_exc2 = dados2[:,0]
-H2_u_forca_bruta = dados2[:,1]
-H2_w_forca_bruta = dados2[:,2]
+H2_u_forca_bruta = dados2[:,3]
+H2_w_forca_bruta = dados2[:,4]
 
 H2u_max1 = np.amax(H2_u_forca_bruta[0: int(0.1*len(H2_u_forca_bruta))])
 H2u_max2 = np.amax(H2_u_forca_bruta[int(0.1*len(H2_u_forca_bruta)):int(len(H2_u_forca_bruta))])
@@ -36,24 +36,25 @@ H2w_max1 = np.amax(H2_w_forca_bruta[0: int(0.1*len(H2_w_forca_bruta))])
 H2w_max2 = np.amax(H2_w_forca_bruta[int(0.1*len(H2_w_forca_bruta)):int(len(H2_w_forca_bruta))])
 
 #Características da Estrutura Principal
-ms = 7.5  #Kg
-ks = 490  #N/m
+ms = 176.935 #Kg
+ks = 18330  #N/m
 es = 0.01
-cc = 2*np.sqrt(ms*ks)   #Ccrítico
-cs = es*cc
-ws = np.sqrt(ks/ms)  #Frequência Natural
+#cc = 2*np.sqrt(ms*ks)   #Ccrítico
+#cs = es*cc
+cs = 36.73  #N.s/m
+ws = np.sqrt(ks/ms)/(2*np.pi)  #Frequência Natural
 
 #Dados do TLCD
 u0 =1
 rho = 1000 #Kg/m³
-e_L=0.001
-b = 3.856
-H = 4
+e_L=0.01
+b = 0.0775
+H = 0.05
 L = 2*H+b
 alfa = b/L
 g = 9.81
-wa = np.sqrt((2*g/L))
-A = 0.0000636
+wa = np.sqrt((2*g/L))/(2*np.pi)
+A = 0.0043875
 ma = rho*A*L
 mi = ma/ms
 
@@ -70,10 +71,10 @@ K = [[(ws**2), 0],
 wn2, phi = eigh(K,M)
 
 wn=np.sqrt(wn2)
-wnHz = wn/(2*np.pi)
-print("\nNatural Frequencies, Hz - Estrutura principal: ", ws/(2*np.pi), 
-      "\n                          Amortecedor:         ", wa/(2*np.pi),
-      "\n                          Estrutura acoplada:  ", wnHz)
+wnHz = wn
+print("\nNatural Frequencies, Hz - Estrutura principal: ", ws, 
+      "\n                          Amortecedor:         ", wa,
+      "\n                          Estrutura acoplada:  ", wn)
 
 Omg_exc[ind_max] = "{:.3f}".format(Omg_exc[ind_max])
 wnHz[0] = "{:.3f}".format(wnHz[0])

@@ -55,7 +55,7 @@ plt.rc('axes', titlesize=16)     # fontsize of the axes title
 plt.rc('axes', labelsize=16)    # fontsize of the x and y labels
 plt.rcParams.update({'font.size': 16})
 plt.xlabel("$\Omega_{exc} [Hz]$")
-plt.ylabel('w')
+plt.ylabel('$w_{0}$')
 plt.legend(loc='best', fontsize=10)
 plt.grid()
 plt.savefig('TLCD_freq_x_w0', format='png')

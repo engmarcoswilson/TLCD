@@ -21,29 +21,30 @@ ceq = dados[:,2]
 ceq_gao = dados[:,3]
 
 #Características da Estrutura Principal
-ms = 7.5  #Kg
-ks = 490  #N/m
+ms = 176.935 #Kg
+ks = 18330  #N/m
 es = 0.01
-cc = 2*np.sqrt(ms*ks)   #Ccrítico
-cs = es*cc
-ws = np.sqrt(ks/ms)  #Frequência Natural
+#cc = 2*np.sqrt(ms*ks)   #Ccrítico
+#cs = es*cc
+cs = 36.73  #N.s/m
+ws = np.sqrt(ks/ms)/(2*np.pi)  #Frequência Natural
 
 #Dados do TLCD
 u0 =1
 rho = 1000 #Kg/m³
-e_L=0.001
-b = 3.856
-H = 4
+e_L=0.01
+b = 0.0775
+H = 0.05
 L = 2*H+b
 alfa = b/L
 g = 9.81
-wa = np.sqrt((2*g/L))
-A = 0.0000636
+wa = np.sqrt((2*g/L))/(2*np.pi)
+A = 0.0043875
 ma = rho*A*L
 mi = ma/ms
 
 #tempo
-n = 500
+n = 5000
 t = np.linspace(0, 400, n)
 winit = (0, 0)
 
@@ -69,11 +70,11 @@ H2_w_analitico_gao = np.zeros(n)
 
 for i in range(0, len(Omg_exc)):
     #Solução própria
-    H2_u_analiticoi[i], H2_w_analiticoi[i] = twoGdl_analitico(mi, ea[i], wa, alfa, ws, es, Omg_exc[i])
+    H2_u_analiticoi[i], H2_w_analiticoi[i] = twoGdl_analitico(mi, ea[i], wa*(2*np.pi), alfa, ws*(2*np.pi), es, Omg_exc[i])
     H2_u_analitico[i] = np.sqrt(H2_u_analiticoi[i]*(H2_u_analiticoi[i].conjugate()))
     H2_w_analitico[i] = np.sqrt(H2_w_analiticoi[i]*(H2_w_analiticoi[i].conjugate()))
     #solução - Gao
-    H2_u_analiticoi_gao[i], H2_w_analiticoi_gao[i] = twoGdl_analitico(mi, ea_gao[i], wa, alfa, ws, es, Omg_exc[i])
+    H2_u_analiticoi_gao[i], H2_w_analiticoi_gao[i] = twoGdl_analitico(mi, ea_gao[i], wa*(2*np.pi), alfa, ws*(2*np.pi), es, Omg_exc[i])
     H2_u_analitico_gao[i] = np.sqrt(H2_u_analiticoi[i]*(H2_u_analiticoi[i].conjugate()))
     H2_w_analitico_gao[i] = np.sqrt(H2_w_analiticoi[i]*(H2_w_analiticoi[i].conjugate()))
     w.writerow([Omg_exc[i], H2_u_analitico[i], H2_w_analitico[i], H2_u_analitico_gao[i], H2_w_analitico_gao[i]])
